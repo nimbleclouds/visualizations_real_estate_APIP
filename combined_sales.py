@@ -418,6 +418,7 @@ if page == "Most Undervalued vs Overpriced Listings":
 
 if page == "Top Undervalued vs Overpriced Listings by Class":
     st.header("Top Undervalued vs Overpriced Listings by Class")
+    st.dataframe(df)
     # --- Step 1: Select top N per class (best + worst) ---
     N = 5  # 👈 adjust as needed
     
