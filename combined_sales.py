@@ -7,6 +7,15 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import statsmodels.formula.api as smf
 import streamlit as st
+
+
+st.set_page_config(
+    page_title="Real Estate Dashboard",
+    layout="wide",  # ← makes the page use the full width
+    initial_sidebar_state="expanded"
+)
+
+
 # --- Load your dataframe ---
 office = pd.read_excel('All_Sales_Prices (2).xlsx',sheet_name='Office Sale')
 res = pd.read_excel('All_Sales_Prices (2).xlsx',sheet_name='Residential Sale')
