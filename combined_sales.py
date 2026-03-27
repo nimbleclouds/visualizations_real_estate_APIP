@@ -228,7 +228,7 @@ if page == "Average Price per sqm Heatmap":
     print(df)
     st.dataframe(df)
     print(df.dtypes)
-    df_count = df.groupby(["district", "class"]).mean(numeric_only=True,'psqm').reset_index()
+    df_count = df.groupby(["district", "class"]).mean('psqm',numeric_only=True).reset_index()
     pivot = df_count.pivot(index="district", columns="class", values="psqm").fillna(0)
     
     fig = px.imshow(
