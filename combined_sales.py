@@ -424,10 +424,10 @@ if page == "Top Undervalued vs Overpriced Listings by Class":
     
     df_top = df.groupby("class", group_keys=False).apply(
         lambda x: pd.concat([
-            x.nsmallest(N, "value_pct"),   # most undervalued
-            x.nlargest(N, "value_pct")     # most overpriced
-        ])
-    )
+            x.nsmallest(N, "value_pct"),
+            x.nlargest(N, "value_pct")
+        ]).reset_index(drop=True)
+    ).reset_index(drop=True)
 
     # Step 2: sort within each class for clean bars
     df_top = df_top.reset_index().sort_values(["value_pct"])
