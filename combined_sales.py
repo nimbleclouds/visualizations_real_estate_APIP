@@ -427,9 +427,9 @@ if page == "Top Undervalued vs Overpriced Listings by Class":
             x.nlargest(N, "value_pct")     # most overpriced
         ])
     )
-    st.dataframe(df_top)
+
     # Step 2: sort within each class for clean bars
-    df_top = df_top.reset_index().sort_values(["class", "value_pct"])
+    df_top = df_top.reset_index().sort_values(["value_pct"])
     
     # --- Step 3: symmetric range ---
     max_abs = df_top["value_pct"].abs().max()
