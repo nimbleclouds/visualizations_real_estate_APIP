@@ -264,12 +264,6 @@ if page == "Average Price per sqm Heatmap":
 
 if page == "Property Price vs Area":
     st.header("Property Price vs Area")
-    color_map = {
-    "Office": "#a14f2a",
-    "Mall": "#d8c7a3",
-    "Residential": "#bfae8c",
-    "Other": "#8c7a5a"
-    }
     fig = px.scatter(
     df,
     x="area",
