@@ -551,4 +551,4 @@ if page == "Price per sqm Distribution by Class":
         
         fig_area.update_yaxes(title="Area (m²)", showgrid=True, gridcolor='rgba(200,200,200,0.2)')
         fig_area.update_xaxes(title="Class", showgrid=False)
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig_area, use_container_width=True)
