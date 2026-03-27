@@ -199,6 +199,12 @@ if page == "Total Available Area by District and Class":
     st.plotly_chart(fig, use_container_width=True)
 
 if page == "Listing Composition by District":
+    color_map = {
+    "Office": "#a14f2a",
+    "Mall": "#d8c7a3",
+    "Residential": "#bfae8c",
+    "Other": "#8c7a5a"
+    }
     st.header("Listing Composition by District")
     df_count = df.groupby(["district", "class"]).size().reset_index(name="count")
     df_pct = df_count.copy()
@@ -225,6 +231,12 @@ if page == "Listing Composition by District":
 
 if page == "Average Price per sqm Heatmap":
     st.header("Average Price per sqm Heatmap")
+    color_map = {
+    "Office": "#a14f2a",
+    "Mall": "#d8c7a3",
+    "Residential": "#bfae8c",
+    "Other": "#8c7a5a"
+    }
     df_count = df.groupby(["district", "class"]).mean(numeric_only=True)['psqm'].reset_index()
     pivot = df_count.pivot(index="district", columns="class", values="psqm").fillna(0)
     fig = px.imshow(
@@ -252,6 +264,12 @@ if page == "Average Price per sqm Heatmap":
 
 if page == "Property Price vs Area":
     st.header("Property Price vs Area")
+    color_map = {
+    "Office": "#a14f2a",
+    "Mall": "#d8c7a3",
+    "Residential": "#bfae8c",
+    "Other": "#8c7a5a"
+    }
     fig = px.scatter(
     df,
     x="area",
@@ -285,6 +303,12 @@ if page == "Property Price vs Area":
 
 if page == "Property Price vs Area by Class":
     st.header("Property Price vs Area by Class")
+    color_map = {
+    "Office": "#a14f2a",
+    "Mall": "#d8c7a3",
+    "Residential": "#bfae8c",
+    "Other": "#8c7a5a"
+    }
     df2 = df.copy()
     df2['label'] = ""
 
@@ -350,6 +374,12 @@ df["value_pct"] = df["value_diff"] / df["expected_price"] * 100
 
 if page == "Property Value Analysis":
     st.header("Property Value Analysis")
+    color_map = {
+    "Office": "#a14f2a",
+    "Mall": "#d8c7a3",
+    "Residential": "#bfae8c",
+    "Other": "#8c7a5a"
+    }
     fig = px.scatter(
     df,
     x="area",
@@ -388,6 +418,12 @@ if page == "Property Value Analysis":
 
 if page == "Most Undervalued vs Overpriced Listings":
     st.header("Most Undervalued vs Overpriced Listings")
+    color_map = {
+    "Office": "#a14f2a",
+    "Mall": "#d8c7a3",
+    "Residential": "#bfae8c",
+    "Other": "#8c7a5a"
+    }
     df_sorted = df.sort_values("value_pct")
     fig = px.bar(
         df_sorted,
@@ -418,6 +454,12 @@ if page == "Most Undervalued vs Overpriced Listings":
 
 if page == "Top Undervalued vs Overpriced Listings by Class":
     st.header("Top Undervalued vs Overpriced Listings by Class")
+    color_map = {
+    "Office": "#a14f2a",
+    "Mall": "#d8c7a3",
+    "Residential": "#bfae8c",
+    "Other": "#8c7a5a"
+    }
 
     # --- Step 1: Select top N per class (best + worst) ---
     N = 5  # 👈 adjust as needed
@@ -481,6 +523,12 @@ if page == "Top Undervalued vs Overpriced Listings by Class":
 
 if page == "Price per sqm Distribution by Class":
     st.header("Price per sqm Distribution by Class")
+    color_map = {
+    "Office": "#a14f2a",
+    "Mall": "#d8c7a3",
+    "Residential": "#bfae8c",
+    "Other": "#8c7a5a"
+    }
         # --- 1️⃣ Price Violin ---
     fig_price = px.violin(
         df,
