@@ -28,12 +28,8 @@ df = pd.concat([office,res,mall])
 # --- Sidebar menu ---
 st.sidebar.title("Navigation")
 page = st.sidebar.selectbox("Choose a chart", [
-    "Average Sale Price",
-    "Total Area",
-    "Listings Count",
-    "Price vs Area Scatter",
-    "Price & Area Violin",
-    "Heatmap"
+    "Average Sale Price by District and Class",
+    "Average Sale Price % Difference by District"
 ])
 
 # --- Custom color palette ---
@@ -45,7 +41,7 @@ color_map = {
 }
 
 # --- Page 1: Average Sale Price ---
-if page == "Average Sale Price":
+if page == "Average Sale Price by District and Class":
     st.header("Average Sale Price by District")
     df_grouped = df.groupby(["district", "class"]).agg({"price": "mean"}).reset_index()
     df_total = df_grouped.groupby("district")["price"].sum().reset_index()
@@ -94,4 +90,48 @@ if page == "Average Sale Price":
             )
         )
     st.plotly_chart(fig, use_container_width=True)
+if page == "Average Sale Price % Difference by District":
+    st.header("Average Sale Price % Difference by District")
+    df_grouped = df.groupby(["district", "class"]).agg({"psqm":"mean"}).reset_index()
+    df_grouped = df_grouped.sort_values("psqm", ascending=False)
+    df_grouped['pct_diff_prev'] = df_grouped.groupby('class')['psqm'].pct_change() * 100
+    df_grouped['pct_diff_prev'] = df_grouped['pct_diff_prev'].fillna(0)
+    classes = df_grouped['class'].unique()
+    custom_palette = ["#a14f2a", "#d8c7a3", "#bfae8c", "#8c7a5a", "#5f665a"]
+    color_map = {cls: custom_palette[i % len(custom_palette)] for i, cls in enumerate(classes)}
     
+    fig = make_subplots(
+        rows=1, cols=len(classes),
+        shared_yaxes=False,
+        subplot_titles=[f"{cls} % Difference" for cls in classes]
+    )
+    for i, cls in enumerate(classes):
+        df_cls = df_grouped[df_grouped['class'] == cls].sort_values('pct_diff_prev', ascending=True)
+        fig.add_trace(
+            go.Bar(
+                x=df_cls['pct_diff_prev'],
+                y=df_cls['district'],
+                orientation='h',
+                text=df_cls['pct_diff_prev'],
+                texttemplate="%{text:,.0f}%",
+                textposition="outside",
+                marker_color=color_map[cls],
+                showlegend=False
+            ),
+            row=1,
+            col=i+1
+        )
+    
+    fig.update_layout(
+        title="Average Sale Price % Difference by District (per Class)",
+        paper_bgcolor='rgba(0,0,0,0)',
+        plot_bgcolor='rgba(0,0,0,0)',
+        font=dict(family="Rockwell", color="white"),
+        height=400,
+        width=1200
+    )
+    
+    for i in range(len(classes)):
+        fig.update_xaxes(title_text="%", row=1, col=i+1, showgrid=True, gridcolor='rgba(200, 200, 200, 0.2)')
+        fig.update_yaxes(title_text="District", row=1, col=i+1, showgrid=True, gridcolor='rgba(200, 200, 200, 0.2)')
+    st.plotly_chart(fig, use_container_width=True)
