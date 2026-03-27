@@ -84,5 +84,5 @@ if page == "Average Sale Price":
             gridcolor='rgba(200, 200, 200, 0.2)'
             )
         )
-        st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, use_container_width=True)
     
