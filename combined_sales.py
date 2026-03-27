@@ -225,6 +225,9 @@ if page == "Listing Composition by District":
 
 if page == "Average Price per sqm Heatmap":
     st.header("Average Price per sqm Heatmap")
+    print(df)
+    st.dataframe(df)
+    print(df.dtypes)
     df_count = df.groupby(["district", "class"]).mean('psqm').reset_index()
     pivot = df_count.pivot(index="district", columns="class", values="psqm").fillna(0)
     
