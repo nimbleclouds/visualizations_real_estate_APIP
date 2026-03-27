@@ -423,11 +423,11 @@ if page == "Top Undervalued vs Overpriced Listings by Class":
     N = 5  # 👈 adjust as needed
     
     df_top = pd.concat([
-        g.nsmallest(N, "value_pct").append(g.nlargest(N, "value_pct"))
+        pd.concat([g.nsmallest(N, "value_pct"), g.nlargest(N, "value_pct")])
         for _, g in df.groupby("class")
     ]).reset_index(drop=True)
     # Step 2: sort within each class for clean bars
-    df_top = df_top.reset_index().sort_values(["value_pct"])
+    df_top = df_top.reset_index().sort_values(["class","value_pct"])
     
     # --- Step 3: symmetric range ---
     max_abs = df_top["value_pct"].abs().max()
