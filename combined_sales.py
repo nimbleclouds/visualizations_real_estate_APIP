@@ -200,10 +200,10 @@ if page == "Total Available Area by District and Class":
 
 if page == "Listing Composition by District":
     color_map = {
-    "Office": "#a14f2a",
-    "Mall": "#d8c7a3",
-    "Residential": "#bfae8c",
-    "Other": "#8c7a5a"
+    "OFFICE": "#a14f2a",
+    "MALL": "#d8c7a3",
+    "RESIDENTIAL": "#bfae8c",
+    "OTHER": "#8c7a5a"
     }
     st.header("Listing Composition by District")
     df_count = df.groupby(["district", "class"]).size().reset_index(name="count")
