@@ -481,7 +481,7 @@ if page == "Top Undervalued vs Overpriced Listings by Class":
 
 if page == "Price per sqm Distribution by Class":
     st.header("Price per sqm Distribution by Class")
-    # --- 1️⃣ Price Violin ---
+        # --- 1️⃣ Price Violin ---
     fig_price = px.violin(
         df,
         x="class",
@@ -516,7 +516,7 @@ if page == "Price per sqm Distribution by Class":
     fig_price.update_xaxes(title="Class", showgrid=False)
     
     fig_price.show()
-    
+    st.plotly_chart(fig_price, use_container_width=True)
     
     # --- 2️⃣ Area Violin ---
     fig_area = px.violin(
@@ -542,13 +542,15 @@ if page == "Price per sqm Distribution by Class":
             font=dict(color="gold", size=12)
         )
     
-        fig_area.update_layout(
-            paper_bgcolor='rgba(0,0,0,0)',
-            plot_bgcolor='rgba(0,0,0,0)',
-            font=dict(family="Rockwell", color="white"),
-            showlegend=False
-        )
-        
-        fig_area.update_yaxes(title="Area (m²)", showgrid=True, gridcolor='rgba(200,200,200,0.2)')
-        fig_area.update_xaxes(title="Class", showgrid=False)
-        st.plotly_chart(fig_area, use_container_width=True)
+    fig_area.update_layout(
+        paper_bgcolor='rgba(0,0,0,0)',
+        plot_bgcolor='rgba(0,0,0,0)',
+        font=dict(family="Rockwell", color="white"),
+        showlegend=False
+    )
+    
+    fig_area.update_yaxes(title="Area (m²)", showgrid=True, gridcolor='rgba(200,200,200,0.2)')
+    fig_area.update_xaxes(title="Class", showgrid=False)
+    
+    fig_area.show()
+    st.plotly_chart(fig_area, use_container_width=True)
