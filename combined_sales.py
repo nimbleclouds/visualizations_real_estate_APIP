@@ -225,12 +225,8 @@ if page == "Listing Composition by District":
 
 if page == "Average Price per sqm Heatmap":
     st.header("Average Price per sqm Heatmap")
-    print(df)
-    st.dataframe(df)
-    print(df.dtypes)
     df_count = df.groupby(["district", "class"]).mean(numeric_only=True)['psqm'].reset_index()
     pivot = df_count.pivot(index="district", columns="class", values="psqm").fillna(0)
-    
     fig = px.imshow(
         pivot,
         text_auto=".2s",
@@ -289,14 +285,15 @@ if page == "Property Price vs Area":
 
 if page == "Property Price vs Area by Class":
     st.header("Property Price vs Area by Class")
-    df['label'] = ""
+    df2 = df.copy()
+    df2['label'] = ""
 
-    top_n = df.nlargest(10, "price").index   # 👈 change N if needed
-    df.loc[top_n, 'label'] = df.loc[top_n, 'name']
+    top_n = df2.nlargest(10, "price").index   # 👈 change N if needed
+    df2.loc[top_n, 'label'] = df2.loc[top_n, 'name']
     
     # --- Step 2: Scatter plot ---
     fig = px.scatter(
-        df,
+        df2,
         x="area",
         y="price",
         size="psqm",
