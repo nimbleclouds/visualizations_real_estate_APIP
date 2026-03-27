@@ -418,17 +418,14 @@ if page == "Most Undervalued vs Overpriced Listings":
 
 if page == "Top Undervalued vs Overpriced Listings by Class":
     st.header("Top Undervalued vs Overpriced Listings by Class")
-    st.dataframe(df)
+
     # --- Step 1: Select top N per class (best + worst) ---
     N = 5  # 👈 adjust as needed
     
-    df_top = df.groupby("class", group_keys=False).apply(
-        lambda x: pd.concat([
-            x.nsmallest(N, "value_pct"),
-            x.nlargest(N, "value_pct")
-        ]).reset_index(drop=True)
-    ).reset_index(drop=True)
-
+    df_top = pd.concat([
+        g.nsmallest(N, "value_pct").append(g.nlargest(N, "value_pct"))
+        for _, g in df.groupby("class")
+    ]).reset_index(drop=True)
     # Step 2: sort within each class for clean bars
     df_top = df_top.reset_index().sort_values(["value_pct"])
     
